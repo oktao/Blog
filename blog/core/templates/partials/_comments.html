@@ -1,0 +1,29 @@
+{% for comment in article.comments.all %}
+  {% if comment.is_approved %}
+    <div class="border rounded p-2 mb-2">
+      <strong>{{ comment.user.username }}</strong> — {{ comment.created_at|date:"d.m.Y H:i" }}
+      <p>{{ comment.content }}</p>
+    </div>
+  {% endif %}
+{% empty %}
+  <p>Ще немає коментарів.</p>
+{% endfor %}
+
+
+{% for comment in article.comments.all %}
+  <div class="border rounded p-2 mb-2 {% if not comment.is_approved %}bg-warning-subtle{% endif %}">
+    <strong>{{ comment.user.username }}</strong> — {{ comment.created_at|date:"d.m.Y H:i" }}
+    <p>{{ comment.content }}</p>
+
+    {% if user.is_authenticated and (user.is_superuser or article.author == user) %}
+      <div class="d-flex gap-2">
+        {% if not comment.is_approved %}
+          <button data-action="approve" data-id="{{ comment.id }}" class="btn btn-success btn-sm btn-mod">Схвалити</button>
+        {% endif %}
+        <button data-action="delete" data-id="{{ comment.id }}" class="btn btn-danger btn-sm btn-mod">Видалити</button>
+      </div>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>Ще немає коментарів.</p>
+{% endfor %}

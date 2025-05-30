@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Нова стаття{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 720px;">
+  <h2 class="mb-4">Створити нову статтю</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Опублікувати</button>
+  </form>
+</div>
+{% endblock %}

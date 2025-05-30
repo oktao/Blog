@@ -1,0 +1,74 @@
+body {
+  background-color: #000;
+  color: #f1f1f1;
+}
+
+/* Контейнер статей, форм, блоків */
+.container {
+  max-width: 960px;
+}
+
+/* Посилання */
+a {
+  color: #4dabf7;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Картки статей */
+.card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  transition: box-shadow 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Кнопки */
+.btn-primary {
+  background-color: #4dabf7;
+  border-color: #4dabf7;
+}
+.btn-primary:hover {
+  background-color: #339af0;
+  border-color: #339af0;
+}
+
+.btn-outline-info {
+  color: #4dabf7;
+  border-color: #4dabf7;
+}
+.btn-outline-info:hover {
+  background-color: #4dabf7;
+  color: #fff;
+}
+
+/* Форми */
+textarea, input[type="text"], input[type="email"], input[type="password"] {
+  background-color: #222;
+  color: #f1f1f1;
+  border: 1px solid #444;
+}
+textarea:focus, input:focus {
+  border-color: #4dabf7;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Навігація */
+.navbar-dark .navbar-nav .nav-link {
+  color: #ddd;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+
+/* Alert */
+.alert-info {
+  background-color: #1e3a5f;
+  border-color: #295d8b;
+  color: #cce4ff;
+}

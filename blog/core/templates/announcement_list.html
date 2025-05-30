@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Оголошення{% endblock %}
+
+{% block content %}
+  <h2>Оголошення</h2>
+  {% for ann in announcements %}
+    <div class="border-bottom pb-2 mb-3">
+      <h5>{{ ann.title }}</h5>
+      <p class="text-muted">{{ ann.created_at|date:"d.m.Y H:i" }}</p>
+      <p>{{ ann.body|linebreaks }}</p>
+    </div>
+  {% empty %}
+    <p>Наразі немає оголошень.</p>
+  {% endfor %}
+{% endblock %}
+
+{% extends "base.html" %}
+{% block title %}Оголошення{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Оголошення</h2>
+{% for ann in announcements %}
+  <div class="border-bottom pb-2 mb-3">
+    <h5>{{ ann.title }}</h5>
+    <p class="text-muted small">{{ ann.created_at|date:"d.m.Y H:i" }}</p>
+    <p>{{ ann.body|linebreaks }}</p>
+  </div>
+{% empty %}
+  <p>Наразі немає оголошень.</p>
+{% endfor %}
+{% endblock %}
