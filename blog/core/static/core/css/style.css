@@ -2,12 +2,19 @@ body {
   background-color: #000;
   color: #f1f1f1;
 }
-
+#main-block {
+  padding-bottom: 30px;
+}
 /* Контейнер статей, форм, блоків */
 .container {
   max-width: 960px;
 }
 
+#footer {
+    position:fixed;
+    bottom:0;
+    width: 100%;
+}
 /* Посилання */
 a {
   color: #4dabf7;
@@ -71,4 +78,8 @@ textarea:focus, input:focus {
   background-color: #1e3a5f;
   border-color: #295d8b;
   color: #cce4ff;
+}
+
+.text-container{
+  padding-bottom: 10px;
 }

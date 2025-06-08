@@ -1,14 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Profile
-from .models import Article, Category, Tag, Media
-from .models import Comment
-from .models import Announcement
-
-@admin.register(Announcement)
-class AnnouncementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
-    search_fields = ('title', 'body')
+from .models import Article, Category, Tag, Comment
 
 
 class ProfileInline(admin.StackedInline):
@@ -39,16 +32,12 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
 
-class MediaInline(admin.TabularInline):
-    model = Media
-    extra = 1
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'status', 'created_at', 'category')
     list_filter = ('status', 'created_at', 'category')
     search_fields = ('title', 'content')
-    inlines = [MediaInline]
     filter_horizontal = ('tags',)
 
 @admin.register(Comment)

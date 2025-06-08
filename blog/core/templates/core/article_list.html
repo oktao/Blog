@@ -1,146 +1,27 @@
-
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ article.title }} — Блог{% endblock %}
+{% block title %}Готовна — Блог{% endblock %}
 
 {% block content %}
-  <h2>{{ article.title }}</h2>
-  <p class="text-muted">Автор: {{ article.author.username }} | {{ article.created_at|date:"d.m.Y H:i" }}</p>
-  <hr>
-  <div>
-    {{ article.content|linebreaks }}
-  </div>
+  {% for article in articles %}
+    <div>
+      <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+      <p class="text-muted">Автор: {{ article.author.username }} | {{ article.created_at|date:"d.m.Y H:i" }}</p>
+      <div class="text-container">
+        {{ article.content|linebreaks }}
+      </div>
+    </div>
+  {% endfor %}
 
-
-  <hr>
+  <!-- <hr>
   <h4>Коментарі:</h4>
   <div id="comment-list">
 
   </div>
 
-  <hr>
+  <hr> -->
   
 {% endblock %}
 
-<h2 class="mb-4">{{ filter_title|default:"Останні статті" }}</h2>
-
-
-<div class="row mb-4">
-  <div class="col-md-6">
-    <h5>Категорії:</h5>
-    <ul class="list-unstyled">
-      {% for category in categories %}
-        <li><a href="{% url 'article_by_category' category.slug %}">{{ category.name }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="col-md-6">
-    <h5>Теги:</h5>
-    <ul class="list-inline">
-      {% for tag in tags %}
-        <li class="list-inline-item">
-          <a href="{% url 'article_by_tag' tag.slug %}" class="badge bg-secondary">{{ tag.name }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-
-{% if announcements %}
-  <div class="alert alert-info">
-    <h5>Оголошення:</h5>
-    <ul class="mb-0">
-      {% for ann in announcements %}
-        <li>
-          <strong>{{ ann.title }}</strong>: {{ ann.body|truncatewords:15 }}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-{% endif %}
-
-
-
-{% load static %}
-
-
-
-
-<!--  Оголошення -->
-{% if announcements %}
-  <div class="alert alert-info">
-    <h5>Оголошення:</h5>
-    <ul class="mb-0">
-      {% for ann in announcements %}
-        <li>
-          <strong>{{ ann.title }}</strong>: {{ ann.body|truncatewords:15 }}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-{% endif %}
-
-<!--  Категорії та теги -->
-<div class="row mb-4">
-  <div class="col-12 col-md-6">
-    <h5>Категорії:</h5>
-    <ul class="list-unstyled">
-      {% for category in categories %}
-        <li>
-          <a href="{% url 'article_by_category' category.slug %}" class="text-decoration-none text-info">
-            {{ category.name }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="col-12 col-md-6">
-    <h5>Теги:</h5>
-    <div>
-      {% for tag in tags %}
-        <a href="{% url 'article_by_tag' tag.slug %}" class="badge bg-secondary me-1 mb-1">
-          {{ tag.name }}
-        </a>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-
-<!--  Кнопка підписки -->
-{% if user.is_authenticated %}
-  <form method="post" action="{% url 'toggle_subscription' %}" class="mb-4">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-outline-info">
-      {% if user.subscription.is_active %}
-        Відписатися від оновлень
-      {% else %}
-        Підписатися на оновлення
-      {% endif %}
-    </button>
-  </form>
-{% endif %}
-
-<!--  Список статей -->
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  {% for article in articles %}
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        {% if article.media.first and article.media.first.type == 'image' %}
-          <img src="{{ article.media.first.file.url }}" class="card-img-top img-fluid rounded-top" alt="Зображення статті">
-        {% endif %}
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">{{ article.title }}</h5>
-          <p class="card-text text-muted small">
-            {{ article.created_at|date:"d.m.Y H:i" }} — {{ article.author.username }}
-          </p>
-          <p class="card-text">{{ article.content|truncatewords:25 }}</p>
-          <a href="{% url 'article_detail' article.id %}" class="btn btn-primary mt-auto w-100">Читати</a>
-        </div>
-      </div>
-    </div>
-  {% empty %}
-    <p>Наразі немає статей.</p>
-  {% endfor %}
-</div>
 

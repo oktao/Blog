@@ -73,14 +73,6 @@ class Article(models.Model):
         return self.title
 
 
-class Media(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='media')
-    file = models.FileField(upload_to='media/')
-    type = models.CharField(max_length=10, choices=(('image', 'Зображення'), ('video', 'Відео')))
-
-    def __str__(self):
-        return f"{self.type} для {self.article.title}"
-
 class Comment(models.Model):
     article = models.ForeignKey('Article', on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='comments')
@@ -90,34 +82,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.content[:30]}"
-    
-class Subscription(models.Model):
-    user = models.OneToOneField('User', on_delete=models.CASCADE, related_name='subscription')
-    is_active = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"Підписка {self.user.username}: {'активна' if self.is_active else 'неактивна'}"
-
-class Rating(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    article = models.ForeignKey('Article', on_delete=models.CASCADE, related_name='ratings')
-    value = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])  # 1–5
-
-    class Meta:
-        unique_together = ('user', 'article')  # один юзер — одна оцінка
-
-    def __str__(self):
-        return f"{self.user.username} → {self.article.title}: {self.value}"
-
-class Announcement(models.Model):
-    title = models.CharField(max_length=200)
-    body = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-created_at']
-
-    def __str__(self):
-        return self.title
 
 
